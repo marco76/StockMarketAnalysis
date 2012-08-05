@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping >
+    <class name="genidea.sa.model.BackTestResult" table="BACKTESTRESULT">
+        <composite-id name="btrKEY" class="genidea.sa.model.BackTestResultKey">
+            <key-property name="buyProperty" column="key_buy"/>
+            <key-property name="sellProperty" column="key_sell"/>
+            <key-property name="stockName" column="stockName"/>
+        </composite-id>
+        <property name="buyParameter" type="float" not-null="false" column="BUY_PARAMETER"/>
+        <property name="cumulatedResult" type="float" not-null="false" column="CUMULATED_RESULT"/>
+        <property name="losses" type="int" not-null="false" column="LOSSES"/>
+        <property name="maxResult" type="float" not-null="false" column="MAX_RESULT"/>
+        <property name="minResult" type="float" not-null="false" column="MIN_RESULT"/>
+        <property name="sellParameter" type="float" not-null="false" column="SELL_PARAMETER"/>
+        <property name="win" type="int" not-null="false" column="WIN"/>
+      </class>
+</hibernate-mapping>

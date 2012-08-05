@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="org.hsqldb.jdbcDriver"/>
+        <property name="username" value="sa"/>
+        <property name="password" value=""/>
+        <property name="url" value="jdbc:hsqldb:file:/Users/marcomolteni/Desktop/Temp3/db;shutdown=true"/>
+
+    </bean>
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="mappingResources">
+            <list>
+                <value>StockDay.hbm.xml</value>
+                <value>StockDetails.hbm.xml</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.connection.autocommit">true</prop>
+               <prop key="hibernate.hbm2ddl.auto">update</prop> 
+            </props>
+        </property>
+        <property name="dataSource">
+            <ref bean="dataSource"/>
+        </property>
+    </bean>
+    <bean id="stockDayRepository" class="dao.HibStockDayRepository">
+        <property name="sessionFactory" ref="sessionFactory"/>
+
+    </bean>
+    <bean id="stockDetailsRepository" class="dao.HibStockDetailsRepository">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+            <property name="sessionFactory" ref="sessionFactory"/>
+        </bean>
+   <tx:annotation-driven/>
+    <bean name="/welcome/*.htm" class="web.WelcomeController">
+      <property name="stc" ref="stockDayRepository"/>
+        <property name="sDetails" ref="stockDetailsRepository"/>
+        <property name="stockData" ref="stockDayRepository"/>
+    </bean>
+    
+
+
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+  <!--
+    <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="defaultHandler" value="simpleUrlController">
+            
+        </property>
+        <property name="mappings">
+            <props>
+                <prop key="/graph/mygraph">chartController</prop>
+
+            </props>
+
+        </property>
+        <property name="alwaysUseFullPath" value="true"/>
+
+    </bean>
+    <bean id="chartController" class="web.ChartController"/>
+    <bean id="simpleUrlController" class="org.springframework.web.servlet.mvc.UrlFilenameViewController"/>
+-->
+</beans>
+

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping >
+    <class name="genidea.sa.StockDay" table="STOCKDAY">
+        <id name="id" type="integer" column="ID">
+           <generator class="native">
+        </generator>
+        </id>
+        <property name="close" type="float" not-null="false" column="CLOSE"/>
+        <property name="dateNumeric" type="int" not-null="false" column="DATENUMERIC"/>
+        <property name="max" type="float" not-null="false" column="MAX_D"/>
+        <property name="min" type="float" not-null="false" column="MIN_D"/>
+        <property name="open" type="float" not-null="false" column="OPEN"/>
+        <property name="stockName" type="string" not-null="false" column="STOCKNAME"/>
+        <property name="volume" type="integer" not-null="false" column="VOLUME"/>
+        <many-to-one name="stockDetail" class="genidea.sa.model.StockDetails" column="STOCKDETAILS_ID" not-null="true"/>
+    </class>
+</hibernate-mapping>

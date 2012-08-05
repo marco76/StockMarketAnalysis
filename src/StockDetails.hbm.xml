@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping >
+    <class name="genidea.sa.model.StockDetails" table="STOCKDETAILS">
+        <id name="id" type="integer" column="ID">
+           <generator class="native">
+        </generator>
+        </id>
+        <property name="lastImportDay" type="int" not-null="false" column="LASTIMPORT"/>
+        <property name="market" type="string" not-null="false" column="MARKET"/>
+        <property name="stockCode" type="string" not-null="false" column="CODE"/>
+        <property name="stockName" type="string" not-null="false" column="NAME"/>
+        <set name="stocks" cascade="all" lazy="true" fetch="join" inverse="true">
+            <key column="STOCKDETAILS_ID" not-null="true"/>
+            <one-to-many class="genidea.sa.StockDay"/>
+        </set>
+    </class>
+</hibernate-mapping>
